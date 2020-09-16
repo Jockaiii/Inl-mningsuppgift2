@@ -11,60 +11,70 @@ namespace Inlämningsuppgift2
         static void Main(string[] args)
         {
             int amount_operators = 0;
-
-            
-
             string allowed_operators = "+-*/";
+            bool b = true;
 
-            try
+            do
             {
-                Console.Write("Ange hur många operatörer du vill ha: ");
-                amount_operators = Convert.ToInt32(Console.ReadLine());
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Du har anget ett felaktivt värde, vänligen försök igen");
-                Console.Write("Ange hur många operatörer du vill ha: ");
-                amount_operators = Convert.ToInt32(Console.ReadLine());
-
-            }
+                try
+                {
+                    Console.Write("Ange hur många operatörer du vill ha: ");
+                    amount_operators = Convert.ToInt32(Console.ReadLine());
+                    b = false;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Du har anget ett felaktivt värde, vänligen försök igen");
+                    b = true;
+                }
+            } while (b != false);
+            
 
             string[] operators = new string[amount_operators];
             int[] values = new int[amount_operators + 1];
 
-            //get_input.Get_operator("Hej");
-            //get_input.Get_value(1);
+            //for (int i = 0; i < amount_operators; i++)
+            //{
+            //    operators[i] = get_input.Get_operator(operators[i]);
+            //    Console.WriteLine(operators[i]);
+            //}
+
+            //for (int i = 0; i < amount_operators + 1; i++)
+            //{
+            //    values[i] = get_input.Get_value(values[i]);
+            //    Console.WriteLine(values[i]);
+            //}
 
             for (int i = 0; i < amount_operators; i++)
             {
-                do
-                {
-                    try
-                    {
-                        Console.Write("Ange operatör nr " + (i + 1) + ": ");
-                        operators[i] = Console.ReadLine();
+                Console.Write("Ange operatör nr " + (i + 1) + ": ");
+                operators[i] = Console.ReadLine();
 
-                    }
-                    catch (FormatException)
-                    {
-                        Console.Write("Du har angivet ett felaktivt värde. Vänligen skriv in en operatör: ");
-                        operators[i] = Console.ReadLine();
-                    }
-                } while (operators[i].Contains(allowed_operators) && operators[i].Length == 1);
+                while (!allowed_operators.Contains(operators[i]) || operators[i].Length != 1)
+                {
+                    Console.Write("Du har angivit ett felaktivt värde, vänligen försök igen: ");
+                    operators[i] = Console.ReadLine();
+                }
             }
 
             for (int i = 0; i < amount_operators + 1; i++)
             {
-                try
+                bool a = true;
+                do
                 {
-                    Console.Write("Ange ett värde: ");
-                    values[i] = Convert.ToInt32(Console.ReadLine());
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Du har anget ett felaktivt värde, vänligen försök igen:");
-                    values[i] = Convert.ToInt32(Console.ReadLine());
-                }
+                    try
+                    {
+                        Console.Write("Ange ett värde " + (i + 1) + ": ");
+                        values[i] = Convert.ToInt32(Console.ReadLine());
+                        a = false;
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("Du har anget ett felaktivt värde, vänligen försök igen:");
+                        a = true;
+                    }
+                } while (a != false);
+                               
             }
         }
 
@@ -74,7 +84,7 @@ namespace Inlämningsuppgift2
         //    public static string Get_operator(string text)
         //    {
         //        int amount_operators = 0;
-        //        string allowed_operators = "+-*/", svar="hej";
+        //        string allowed_operators = "+-*/", svar = "hej";
 
         //        string[] operators = new string[amount_operators];
         //        int[] values = new int[amount_operators + 1];
@@ -90,14 +100,14 @@ namespace Inlämningsuppgift2
         //                    svar = operators[i];
 
         //                }
-        //                catch (Exception)
+        //                catch (FormatException)
         //                {
         //                    Console.Write("Du har angivet ett felaktivt värde. Vänligen skriv in en operatör: ");
         //                    operators[i] = Console.ReadLine();
         //                    svar = operators[i];
 
         //                }
-        //            } while (operators[i] != allowed_operators && operators[i].Length != 1);
+        //            } while (operators[i].Contains(allowed_operators) && operators[i].Length == 1);
         //        }
         //        return svar;
         //    }
@@ -113,7 +123,7 @@ namespace Inlämningsuppgift2
         //        {
         //            try
         //            {
-        //                Console.Write("Ange ett värde");
+        //                Console.Write("Ange ett värde: ");
         //                values[i] = Convert.ToInt32(Console.ReadLine());
         //                svar = values[i];
         //            }
@@ -125,7 +135,6 @@ namespace Inlämningsuppgift2
         //            }
         //        }
         //        return svar;
-
         //    }
         //}
 
