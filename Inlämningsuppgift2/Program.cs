@@ -44,7 +44,7 @@ namespace Inlämningsuppgift2
                         Console.Write("Du har angivet ett felaktivt värde. Vänligen skriv in en operatör: ");
                         operators[i] = Console.ReadLine();
                     }
-                } while (operators[i] != allowed_operators);
+                } while (operators[i] != allowed_operators && operators[i].Length != 1);
             }
 
             for (int i = 0; i < amount_operators + 1; i++)
