@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq.Expressions;
 
 namespace Inlämningsuppgift2
 {
@@ -22,7 +23,7 @@ namespace Inlämningsuppgift2
             }
             catch (FormatException)
             {
-                Console.WriteLine("Du har anget ett felaktivt värde, vänligen försök igen:");
+                Console.WriteLine("Du har anget ett felaktivt värde, vänligen försök igen");
                 Console.Write("Ange hur många operatörer du vill ha: ");
                 amount_operators = Convert.ToInt32(Console.ReadLine());
 
@@ -30,15 +31,20 @@ namespace Inlämningsuppgift2
 
             for (int i = 0; i < amount_operators; i++)
             {
-                if (operators[i] == allowed_operators)
+                do
                 {
-                    Console.Write("Ange operatör nr " + (i + 1) + ": ");
-                    operators[i] = Console.ReadLine();
-                }
-                else
-                {
-                    Console.Write("Du har angivet ett felaktivt värde. Vänligen skriv in en operatör: ");
-                }
+                    try
+                    {
+                        Console.Write("Ange operatör nr " + (i + 1) + ": ");
+                        operators[i] = Console.ReadLine();
+
+                    }
+                    catch (Exception)
+                    {
+                        Console.Write("Du har angivet ett felaktivt värde. Vänligen skriv in en operatör: ");
+                        operators[i] = Console.ReadLine();
+                    }
+                } while (operators[i] != allowed_operators);
             }
 
             for (int i = 0; i < amount_operators + 1; i++)
@@ -54,12 +60,6 @@ namespace Inlämningsuppgift2
                     values[i] = Convert.ToInt32(Console.ReadLine());
                 }
             }
-
-            //amount_operators[i] = get_operators();
-
-
         }
-
-        //get_operators()
     }
 }
