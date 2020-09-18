@@ -12,8 +12,7 @@ namespace Inlämningsuppgift2
         static void Main(string[] args)
         {
             int amount_operators = 0, count=1, count2 = 1;
-            string allowed_operators = "+-*/";
-            bool b = true;
+            bool a = true;
 
             do
             {
@@ -21,14 +20,14 @@ namespace Inlämningsuppgift2
                 {
                     Console.Write("Ange hur många operatörer du vill ha: ");
                     amount_operators = Convert.ToInt32(Console.ReadLine());
-                    b = false;
+                    a = false;
                 }
                 catch (FormatException)
                 {
                     Console.WriteLine("Du har anget ett felaktivt värde, vänligen försök igen");
-                    b = true;
+                    a = true;
                 }
-            } while (b != false);
+            } while (a != false);
 
             //amount_operators = get_input.operator_quantity(0);
 
@@ -38,13 +37,13 @@ namespace Inlämningsuppgift2
             for (int i = 0; i < amount_operators; i++)
             {
                 Console.Write("Ange operatör nr " + count + ": ");
-                operators[i] = get_input.Get_operator("amount_operators");
+                operators[i] = get_input.Get_operator("Hej");
                 Console.WriteLine(operators[i]);
                 count++;
             }
             for (int i = 0; i < amount_operators + 1; i++)
             {
-                Console.Write("ange ett värde " + count2 + ": ");
+                Console.Write("ange värde " + count2 + ": ");
                 values[i] = get_input.Get_value(amount_operators);
                 Console.WriteLine(values[i]);
                 count2++;
@@ -81,51 +80,49 @@ namespace Inlämningsuppgift2
             //        } while (a != false);
 
             //    }
-            }
+        }
 
             class get_input
-        {
-            public static string Get_operator(string text)
             {
-                string allowed_operators = "+-*/", svar = "hej";
-                bool a = true;
-
-                do
+                public static string Get_operator(string text)
                 {
-                    svar = Console.ReadLine();
-                    a = false;
+                    string allowed_operators = "+-*/", svar = "hej";
+                    bool a = true;
 
-                    while (!allowed_operators.Contains(svar) || svar.Length != 1)
+                    do
                     {
-                        Console.Write("Du har angivit ett felaktivt värde, vänligen försök igen: ");
                         svar = Console.ReadLine();
-                        a = true;
-                    }
-                } while (a != false);                
-                return svar;
-            }
-
-            public static int Get_value(int amount_operators)
-            {
-                int svar = 0;
-                bool a = true;
-
-                do
-                {
-                    try
-                    {
-                        svar = Convert.ToInt32(Console.ReadLine());
                         a = false;
-                    }
-                    catch (FormatException)
+
+                        if (!allowed_operators.Contains(svar) || svar.Length != 1)
+                        {
+                            Console.Write("Du har angivit ett felaktivt värde, vänligen försök igen: ");
+                            a = true;
+                        }
+                    } while (a != false);                
+                    return svar;
+                }
+                public static int Get_value(int amount_operators)
+                {
+                    int svar = 0;
+                    bool a = true;
+
+                    do
                     {
-                        Console.WriteLine("du har anget ett felaktivt värde, vänligen försök igen:");
-                        a = true;
-                    }
-                } while (a != false);
-                return svar;
+                        try
+                        {
+                            svar = Convert.ToInt32(Console.ReadLine());
+                            a = false;
+                        }
+                        catch (FormatException)
+                        {
+                            Console.Write("du har anget ett felaktivt värde, vänligen försök igen:");
+                            a = true;
+                        }
+                    } while (a != false);
+                    return svar;
+                }
             }
-        }
         class calculate
         {
 
