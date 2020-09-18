@@ -48,40 +48,7 @@ namespace Inlämningsuppgift2
                 Console.WriteLine(values[i]);
                 count2++;
             }
-
-            //    for (int i = 0; i < amount_operators; i++)
-            //    {
-            //        Console.Write("Ange operatör nr " + (i + 1) + ": ");
-            //        operators[i] = Console.ReadLine();
-
-            //        while (!allowed_operators.Contains(operators[i]) || operators[i].Length != 1)
-            //        {
-            //            Console.Write("Du har angivit ett felaktivt värde, vänligen försök igen: ");
-            //            operators[i] = Console.ReadLine();
-            //        }
-            //    }
-
-            //    for (int i = 0; i < amount_operators + 1; i++)
-            //    {
-            //        bool a = true;
-            //        do
-            //        {
-            //            try
-            //            {
-            //                Console.Write("Ange ett värde " + (i + 1) + ": ");
-            //                values[i] = Convert.ToInt32(Console.ReadLine());
-            //                a = false;
-            //            }
-            //            catch (FormatException)
-            //            {
-            //                Console.WriteLine("Du har anget ett felaktivt värde, vänligen försök igen:");
-            //                a = true;
-            //            }
-            //        } while (a != false);
-
-            //    }
         }
-
             class get_input
             {
                 public static string Get_operator(string text)
