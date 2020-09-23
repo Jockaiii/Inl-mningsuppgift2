@@ -146,7 +146,15 @@ namespace Inlämningsuppgift2
                 else if (operators[j].Contains("/") && operators[j - 1].Contains("*"))
                 {
                     keep_calc[j - check_amount_of_operators_in_a_row(operators, j) + 1] /= values[j + 1];
-                }                           
+                }
+                else if (operators[j].Contains("/"))
+                {
+                    svar = values[j] / values[j + 1];
+                }
+                else if (operators[j].Contains("*"))
+                {
+                    svar = values[j] * values[j + 1];
+                }
             }
             catch (IndexOutOfRangeException)
             {
@@ -164,7 +172,50 @@ namespace Inlämningsuppgift2
         public static double Addition_Subtraction(string[] operators, int[] values, double[] keep_calc, int j)
         {
             double svar = 0;
-
+            try
+            {
+                if (operators[j].Contains("+") && operators[j - 1].Contains("*") || operators[j - 1].Contains("/") || operators[j - 1].Contains("+") || operators[j - 1].Contains("-"))
+                {
+                    svar += values[j + 1];
+                }
+                else if (operators[j].Contains("+") && operators[j + 1].Contains("*") || operators[j - 1].Contains("/") || operators[j - 1].Contains("+") || operators[j - 1].Contains("-"))
+                {
+                    svar += values[j + 1];
+                }
+                else if (operators[j].Contains("-") && operators[j - 1].Contains("*") || operators[j - 1].Contains("/") || operators[j - 1].Contains("+") || operators[j - 1].Contains("-"))
+                {
+                    svar -= values[j + 1];
+                }
+                else if (operators[j].Contains("-") && operators[j + 1].Contains("*") || operators[j - 1].Contains("/") || operators[j - 1].Contains("+") || operators[j - 1].Contains("-"))
+                {
+                    svar -= values[j + 1];
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                try
+                {
+                    if (operators[j].Contains("+") && operators[j + 1].Contains("*") || operators[j + 1].Contains("/"))
+                    {
+                        svar += values[j];
+                    }
+                    else if (operators[j].Contains("-") && operators[j + 1].Contains("*") || operators[j + 1].Contains("/"))
+                    {
+                        svar -= values[j];
+                    }
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    if (operators[j].Contains("+"))
+                    {
+                        svar = values[j] + values[j+1];
+                    }
+                    else if (operators[j].Contains("-"))
+                    {
+                        svar = values[j] - values[j+1];
+                    }
+                }             
+            }
             return svar;
         }
     }
