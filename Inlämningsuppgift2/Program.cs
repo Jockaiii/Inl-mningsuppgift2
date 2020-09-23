@@ -1,10 +1,5 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.SymbolStore;
-using System.Dynamic;
-using System.Linq.Expressions;
-using System.Threading;
+﻿using System;
+using System.Runtime.ExceptionServices;
 
 namespace Inlämningsuppgift2
 {
@@ -12,27 +7,58 @@ namespace Inlämningsuppgift2
     {
         static void Main(string[] args)
         {
-            int amount_operators, count=1, count2 = 1;
+            double svar = 0;
+            int amount_operators, count = 1, count2 = 1;
 
             amount_operators = Get_input.Operator_quantity();
 
             string[] operators = new string[amount_operators];
             int[] values = new int[amount_operators + 1];
+            double[] keep_calc = new double[amount_operators];
 
             for (int i = 0; i < amount_operators; i++)
             {
                 Console.Write("Ange operatör nr " + count + ": ");
                 operators[i] = Get_input.Get_operator();
-                Console.WriteLine(operators[i]);
                 count++;
             }
             for (int i = 0; i < amount_operators + 1; i++)
             {
-                Console.Write("ange värde " + count2 + ": ");
+                Console.Write("Ange värde " + count2 + ": ");
                 values[i] = Get_input.Get_value();
-                Console.WriteLine(values[i]);
                 count2++;
-            }                       
+            }
+            
+
+            for (int j = 0; j < amount_operators; j++)
+            {
+                if (operators[j].Contains("*"))
+                    keep_calc[j] = Calculate.Check_multiplier(values[j], values[j + 1]);
+            }
+            for (int j = 0; j < amount_operators; j++)
+            {
+                if(operators[j].Contains("/"))
+                keep_calc[j] = Calculate.Check_division(operators, values, keep_calc, j);
+            }
+            for (int j = 0; j < amount_operators; j++)
+            {
+                if (operators[j].Contains("+"))
+                    keep_calc[j] = Calculate.Check_addition(operators[j], values[j], values[j + 1], j);
+            }
+            for (int j = 0; j < amount_operators; j++)
+            {
+                if (operators[j].Contains("-"))
+                    keep_calc[j] = Calculate.Check_subtraktion(operators[j], values[j], values[j + 1], j);
+            }
+
+
+            for (int i = 0; i < keep_calc.Length; i++)
+            {
+                svar += keep_calc[i];
+            }
+
+            Console.Write("svaret är = " + svar);
+
         }
     }
     class Get_input
@@ -90,7 +116,7 @@ namespace Inlämningsuppgift2
                 }
                 catch (FormatException)
                 {
-                    Console.Write("du har anget ett felaktivt värde, vänligen försök igen:");
+                    Console.Write("Du har anget ett felaktivt värde, vänligen försök igen:");
                     a = true;
                 }
             } while (a != false);
@@ -99,45 +125,53 @@ namespace Inlämningsuppgift2
     }
     class Calculate
     {
-        public static int get_order(string svar)
+        public static double Check_multiplier(int värde1, int värde2)
         {
-            switch (svar)
-            {
-                case "x":
-                    return 1;
-                case "/":
-                    return 2;
-                case "+":
-                    return 3;
-                case "-":
-                    return 4;
-                default:
-                    return 0;
-            }
+            double svar;
+            svar = värde1 * värde2;
+            return svar;
         }
 
-        //public static double calc(int order)
-        //{
-        //    if (order == 1)
-        //    {
+        public static double Check_division(string[] operators, int[] values, double[] keep_calc, int j)
+        {
+            double svar = 0;
+            try
+            {
+                if (operators[j].Contains("/") && operators[j - 1].Contains("*") && operators[j + 1].Contains("*"))
+                {
+                    keep_calc[j - 1] /= values[j + 1];
+                    keep_calc[j - 1] *= keep_calc[j + 1];
+                    keep_calc[j + 1] = 0;
+                }
+                else if (operators[j].Contains("/") && operators[j - 1].Contains("*"))
+                {
+                    keep_calc[j - 1] /= values[j + 1];
+                }               
+            }
+            catch (IndexOutOfRangeException)
+            {
+               if (operators[j].Contains("/") && operators[j + 1].Contains("*"))
+                {
+                    keep_calc[j + 1] = values[j] / keep_calc[j +1];
+                }
+                else
+                {
+                    svar = values[j] / values[j + 1];
+                }
+            }               
+            return svar;
+        }
 
-        //    }
-        //    else if (order == 2)
-        //    {
+        public static double Check_addition(string operator_pos, int värde1, int värde2, int i)
+        {
+            double svar = 0;
+            return svar;
+        }
 
-        //    }
-        //    else if (order == 3)
-        //    {
-
-        //    }
-        //    else if (order == 4)
-        //    {
-
-        //    }
-        //    else
-        //    {
-
-        //    }
-        //}
+        public static double Check_subtraktion(string operator_pos, int värde1, int värde2, int i)
+        {
+            double svar = 0;
+            return svar;
+        }
     }
 }
